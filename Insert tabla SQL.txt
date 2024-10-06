@@ -1,0 +1,66 @@
+-- Inserción de datos en la tabla 'Cliente'
+INSERT INTO Cliente (id_cliente, nombre, apellido, dni, numero_contacto, correo)
+VALUES 
+(1, 'Juan', 'Pérez', '12345678', '123456789', 'juan.perez@example.com'),
+(2, 'María', 'González', '87654321', '987654321', 'maria.gonzalez@example.com'),
+(3, 'Carlos', 'Ramírez', '11223344', '456789123', 'carlos.ramirez@example.com');
+
+-- Inserción de datos en la tabla 'Cargo'
+INSERT INTO Cargo (id_cargo, tipo_cargo, descripcion)
+VALUES 
+(1, 'Recepcionista', 'Encargado de la atención al cliente y gestión de reservas'),
+(2, 'Conserje', 'Encargado de recibir a los huéspedes y gestionar el estacionamiento'),
+(3, 'Gerente', 'Encargado de la administración del hotel');
+
+-- Inserción de datos en la tabla 'Personal'
+INSERT INTO Personal (id_personal, numero_empleado, nombre, apellido, dni, telefono, turno, id_cargo)
+VALUES 
+(1, 'E001', 'Ana', 'López', '34567890', '234567890', 'Mañana', 1),
+(2, 'E002', 'Luis', 'Martínez', '56789012', '345678901', 'Tarde', 2),
+(3, 'E003', 'Sandra', 'Gómez', '78901234', '456789012', 'Noche', 3);
+
+-- Inserción de datos en la tabla 'Habitacion'
+INSERT INTO Habitacion (id_habitacion, numero_habitacion, tipo_habitacion, precio_noche)
+VALUES 
+(1, '101', 'Individual', 50.00),
+(2, '102', 'Doble', 80.00),
+(3, '103', 'Suite', 150.00);
+
+-- Inserción de datos en la tabla 'Estacionamiento'
+INSERT INTO Estacionamiento (id_estacionamiento, numero_plaza, estado_plaza, precio_hora, precio_dia)
+VALUES 
+(1, 'A01', 'Disponible', 5.00, 20.00),
+(2, 'A02', 'Ocupado', 5.00, 20.00),
+(3, 'B01', 'Disponible', 5.00, 20.00);
+
+-- Inserción de datos en la tabla 'Pago'
+INSERT INTO Pago (id_pago, metodo_pago)
+VALUES 
+(1, 'Tarjeta de crédito'),
+(2, 'Transferencia bancaria'),
+(3, 'Efectivo');
+
+-- Inserción de datos en la tabla 'Reserva' (Aseguramos que id_cliente, id_habitacion, id_estacionamiento y id_pago existan)
+INSERT INTO Reserva (id_reserva, fecha_ingreso, fecha_salida, estado_reserva, cantidad_huesped, id_cliente, id_habitacion, id_estacionamiento, id_pago)
+VALUES 
+(1, '2024-10-10', '2024-10-12', 'Confirmada', 1, 1, 1, 1, 1),
+(2, '2024-10-15', '2024-10-18', 'Pendiente', 2, 2, 2, NULL, 2),
+(3, '2024-10-20', '2024-10-25', 'Confirmada', 3, 3, 3, 3, 3);
+
+-- Inserción de datos en la tabla 'Historial_reserva' (Aseguramos que id_reserva exista)
+INSERT INTO Historial_reserva (id_hisreserva, id_reserva, fecha_modificacion, estado_anterior, estado_actual)
+VALUES 
+(1, 1, '2024-10-01', 'Pendiente', 'Confirmada'),
+(2, 2, '2024-10-05', 'Reservada', 'Pendiente');
+
+-- Inserción de datos en la tabla 'Historial_pago' (Aseguramos que id_reserva y id_pago existan)
+INSERT INTO Historial_pago (id_historialpago, num_transaccion, fecha_pago, estado_pago, id_reserva, id_pago)
+VALUES 
+(1, 'TX001', '2024-10-12', 'Pagado', 1, 1),
+(2, 'TX002', '2024-10-18', 'Pendiente', 2, 2);
+
+-- Inserción de datos en la tabla 'Historial_estacionamiento' (Aseguramos que id_cliente, id_estacionamiento e id_personal existan)
+INSERT INTO Historial_estacionamiento (id_historialest, tiempo, id_cliente, id_estacionamiento, id_personal)
+VALUES 
+(1, '2 horas', 1, 1, 1),
+(2, '5 horas', 3, 3, 2);

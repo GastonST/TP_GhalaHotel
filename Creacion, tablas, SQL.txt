@@ -1,0 +1,111 @@
+
+-- Crear base de datos--
+CREATE DATABASE `Ghala_Hotel_Salta`;
+
+-- Usar la base de datos recién creada--
+USE `Ghala_Hotel_Salta`;
+
+
+-- Crear tabla Cliente 
+CREATE TABLE Cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    dni VARCHAR(20) UNIQUE NOT NULL,
+    numero_contacto VARCHAR(20),
+    correo VARCHAR(100) NOT NULL
+);
+
+-- Crear tabla Cargo
+CREATE TABLE Cargo (
+    id_cargo INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_cargo VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(250)
+);
+
+-- Crear tabla Personal
+CREATE TABLE Personal (
+    id_personal INT AUTO_INCREMENT PRIMARY KEY,
+    numero_empleado VARCHAR(20) UNIQUE NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    dni VARCHAR(20) UNIQUE NOT NULL,
+    telefono VARCHAR(20),
+    turno VARCHAR(20),
+    id_cargo INT,
+    FOREIGN KEY (id_cargo) REFERENCES Cargo(id_cargo)
+);
+
+-- Crear tabla Estacionamiento
+CREATE TABLE Estacionamiento (
+    id_estacionamiento INT AUTO_INCREMENT PRIMARY KEY,
+    numero_plaza INT NOT NULL,
+    estado_plaza VARCHAR(20) NOT NULL,
+    precio_hora DECIMAL(10, 2) NOT NULL,
+    precio_dia DECIMAL(10, 2) NOT NULL
+);
+
+-- Crear tabla Historial_estacionamiento
+CREATE TABLE Historial_estacionamiento (
+    id_historialest INT AUTO_INCREMENT PRIMARY KEY,
+    tiempo VARCHAR(50),
+    id_cliente INT,
+    id_estacionamiento INT,
+    id_personal INT,
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
+    FOREIGN KEY (id_estacionamiento) REFERENCES Estacionamiento(id_estacionamiento),
+    FOREIGN KEY (id_personal) REFERENCES Personal(id_personal)
+);
+
+-- Crear tabla Habitacion
+CREATE TABLE Habitacion (
+    id_habitacion INT AUTO_INCREMENT PRIMARY KEY,
+    numero_habitacion INT NOT NULL,
+    tipo_habitacion VARCHAR(50) NOT NULL,
+    precio_noche DECIMAL(10, 2) NOT NULL
+);
+
+-- Crear tabla Pago
+CREATE TABLE Pago (
+    id_pago INT AUTO_INCREMENT PRIMARY KEY,
+    metodo_pago VARCHAR(50) NOT NULL
+);
+
+-- Crear tabla Reserva
+CREATE TABLE Reserva (
+    id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_ingreso DATE NOT NULL,
+    fecha_salida DATE NOT NULL,
+    estado_reserva VARCHAR(20) NOT NULL,
+    cantidad_huesped INT NOT NULL,
+    id_cliente INT,
+    id_habitacion INT,
+    id_estacionamiento INT DEFAULT NULL,
+    id_pago INT,
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
+    FOREIGN KEY (id_habitacion) REFERENCES Habitacion(id_habitacion),
+    FOREIGN KEY (id_estacionamiento) REFERENCES Estacionamiento(id_estacionamiento),
+    FOREIGN KEY (id_pago) REFERENCES Pago(id_pago)
+);
+
+-- Crear tabla Historial_reserva
+CREATE TABLE Historial_reserva (
+    id_hisreserva INT AUTO_INCREMENT PRIMARY KEY,
+    id_reserva INT,
+    fecha_modificacion TIMESTAMP NOT NULL,
+    estado_anterior VARCHAR(20),
+    estado_actual VARCHAR(20),
+    FOREIGN KEY (id_reserva) REFERENCES Reserva(id_reserva)
+);
+
+-- Crear tabla Historial_pago
+CREATE TABLE Historial_pago (
+    id_historialpago INT AUTO_INCREMENT PRIMARY KEY,
+    num_transaccion VARCHAR(50) NOT NULL,
+    fecha_pago TIMESTAMP NOT NULL,
+    estado_pago VARCHAR(20) NOT NULL,
+    id_reserva INT,
+    id_pago INT,
+    FOREIGN KEY (id_reserva) REFERENCES Reserva(id_reserva),
+    FOREIGN KEY (id_pago) REFERENCES Pago(id_pago)
+);

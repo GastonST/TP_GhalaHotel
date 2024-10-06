@@ -1,0 +1,23 @@
+-- CONSULTAR LAS RESERVAS REALIZADAS POR LOS CLIENTES
+SELECT R.id_reserva, C.nombre, C.apellido, R.fecha_ingreso, R.fecha_salida, R.estado_reserva 
+FROM Reserva R
+JOIN Cliente C ON R.id_cliente = C.id_cliente;
+
+-- Consultar las habitaciones disponibles en el hotel
+SELECT id_habitacion, numero_habitacion, tipo_habitacion, precio_noche
+FROM Habitacion
+WHERE id_habitacion NOT IN (SELECT id_habitacion FROM Reserva WHERE estado_reserva = 'Reservada');
+
+
+-- Consultar los pagos realizados por cada cliente
+SELECT HP.num_transaccion, C.nombre, C.apellido, P.metodo_pago, HP.estado_pago, HP.fecha_pago
+FROM Historial_pago HP
+JOIN Reserva R ON HP.id_reserva = R.id_reserva
+JOIN Cliente C ON R.id_cliente = C.id_cliente
+JOIN Pago P ON HP.id_pago = P.id_pago;
+
+-- consultar el historial de uso del estacionamiento 
+SELECT HE.id_historialest, C.nombre, C.apellido, HE.tiempo, P.nombre AS nombre_personal, P.apellido AS apellido_personal
+FROM Historial_estacionamiento HE
+JOIN Cliente C ON HE.id_cliente = C.id_cliente
+JOIN Personal P ON HE.id_personal = P.id_personal;

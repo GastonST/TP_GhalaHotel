@@ -1,0 +1,29 @@
+-- Borrar los registros del historial de pago
+DELETE FROM Historial_pago;
+
+-- Borrar los registros del historial de reservas
+DELETE FROM Historial_reserva;
+
+-- Borrar los registros del historial de estacionamiento
+DELETE FROM Historial_estacionamiento;
+
+-- Borrar las reservas
+DELETE FROM Reserva;
+
+-- Borrar los pagos
+DELETE FROM Pago;
+
+-- Borrar los registros de los clientes
+DELETE FROM Cliente;
+
+-- Borrar los registros del personal
+DELETE FROM Personal;
+
+-- Borrar las habitaciones
+DELETE FROM Habitacion;
+
+-- Borrar los estacionamientos
+DELETE FROM Estacionamiento;
+
+--  Borrar los cargos del personal
+DELETE FROM Cargo;
